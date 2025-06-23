@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AccountRole {
+  Admin
+  Technician
+}
+
+model Account {
+  id         String      @id @default(uuid())
+  name       String      @unique @map("name")
+  email      String      @unique @map("email")
+  password   String      @unique @map("password")
+  role       AccountRole @default(Technician) @map("role")
+  isVerified Boolean     @default(false) @map("is_verified")
+
+  serviceJobs ServiceJob[]
+
+  @@map("accounts")
+}
+
+enum PickupStatus {
+  ANTAR_SENDIRI // NOT_SCHEDULED
+  BELUM_DIAMBIL // NOT_PICKED_UP
+  SUDAH_DIAMBIL // PICKED_UP
+  DIBATALKAN // CANCELLED
+}
+
+model Customer {
+  id                  String       @id @default(uuid())
+  fullName            String       @map("full_name")
+  deviceId            String       @map("device_id")
+  device              Device       @relation(fields: [deviceId], references: [id])
+  merkId              String       @map("merk_id")
+  merk                Merk         @relation(fields: [merkId], references: [id])
+  devicePhoto         String?      @map("device_photo")
+  complaint           String       @map("complaint")
+  preferredPickupDate DateTime?    @map("preferred_pickup_date")
+  preferredPickupTime String?      @map("preferred_pickup_time")
+  pickupStatus        PickupStatus @map("pickup_status")
+  requestForDelivery  Boolean      @map("request_for_delivery")
+
+  serviceJobs ServiceJob[]
+
+  @@map("customers")
+}
+
+model Device {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  customers Customer[]
+
+  @@map("devices")
+}
+
+model Merk {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  customers Customer[]
+
+  @@map("merks")
+}
+
+enum ServiceJobStatus {
+  DALAM_ANTRIAN // in queue / queued
+  TUNGGU_SPAREPART // waiting for spare parts
+  PROSES_PENGERJAAN // in progress / under repair
+  SELESAI // completed / done
+  DIBATALKAN // cancelled
+  DALAM_PENGIRIMAN // in delivery
+}
+
+model ServiceJob {
+  id                  String           @id @default(uuid())
+  createdAt           DateTime         @default(now()) @map("created_at")
+  customerId          String           @map("customer_id")
+  customer            Customer         @relation(fields: [customerId], references: [id])
+  accountId           String?          @map("account_id")
+  account             Account?         @relation(fields: [accountId], references: [id])
+  status              ServiceJobStatus @map("status")
+  descriptionOfDamage String?          @map("description_of_damage")
+  updatedAt           DateTime?        @updatedAt @map("updated_at")
+  endAt               DateTime?        @map("end_at")
+
+  @@map("service_jobs")
+}
