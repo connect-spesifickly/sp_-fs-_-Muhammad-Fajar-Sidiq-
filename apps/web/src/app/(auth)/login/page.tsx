@@ -44,7 +44,7 @@ export default function Login() {
         console.error(result.error);
       } else {
         toast("Login success");
-        router.push("/");
+        router.push("/dashboard");
       }
     } catch (error) {
       toast("Login Failed");
@@ -113,7 +113,7 @@ export default function Login() {
         <p className="font-normal text-[14px] text-sm text-slate-600">
           Don`t have an account?{" "}
           <a
-            href="https://logoipsum-test.vercel.app/register"
+            href="http://localhost:3000/register"
             className="text-blue-600 underline"
           >
             Register

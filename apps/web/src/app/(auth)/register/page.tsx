@@ -54,7 +54,7 @@ export default function Register() {
           );
         } else {
           toast("Registration and login successful");
-          router.push("/");
+          router.push("/dashboard");
         }
       }
     } catch (err) {
@@ -125,7 +125,7 @@ export default function Register() {
         <p className="font-normal text-[14px] text-sm text-slate-600">
           Already have an account?{" "}
           <a
-            href="https://logoipsum-test.vercel.app/login"
+            href="http://localhost:3000/login"
             className="text-blue-600 underline"
           >
             Login
