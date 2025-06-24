@@ -9,8 +9,9 @@ export default function Home() {
     <div className="flex justify-center items-center text-red-500">
       Home 1
       <div className="">
-        <div className="">{session?.accessToken} ini token</div>
-        <div className=""></div>
+        <div className="w-[500px] h-fit">{session?.accessToken} ini token</div>
+        <div className="w-[500px] h-fit">{session?.email} ini email</div>
+        <div className="w-[500px] h-fit">{session?.id} ini id</div>
       </div>
     </div>
   );

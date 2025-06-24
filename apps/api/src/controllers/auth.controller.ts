@@ -30,6 +30,21 @@ class AuthController {
       next(error);
     }
   }
+
+  async refreshToken(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { refreshToken } = req.body;
+      const result = await authService.refreshToken(refreshToken);
+      ApiResponse({
+        res,
+        statusCode: 200,
+        message: "Token refreshed successfully",
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new AuthController();

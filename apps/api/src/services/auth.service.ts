@@ -5,6 +5,8 @@ import {
 } from "../utils/generate-password";
 import { putUserAccessToken } from "../helpers/jwt";
 import { ResponseError } from "../helpers/error";
+import { verify } from "jsonwebtoken";
+import { JWT_REFRESH_SECRET } from "../config";
 
 class AuthService {
   async register(data: { email: string; password: string }) {
@@ -52,6 +54,29 @@ class AuthService {
       user: { id: user.id, email: user.email },
       ...tokens,
     };
+  }
+
+  async refreshToken(refreshToken: string) {
+    try {
+      const decoded = verify(refreshToken, JWT_REFRESH_SECRET) as {
+        email: string;
+      };
+      if (!decoded?.email) {
+        throw new ResponseError(401, "Invalid refresh token");
+      }
+      // Find user by email
+      const user = await prisma.user.findUnique({
+        where: { email: decoded.email },
+      });
+      if (!user) {
+        throw new ResponseError(401, "User not found");
+      }
+      // Generate new tokens
+      const tokens = await putUserAccessToken(user, user.email);
+      return tokens;
+    } catch (error) {
+      throw new ResponseError(401, "Invalid or expired refresh token");
+    }
   }
 }
 

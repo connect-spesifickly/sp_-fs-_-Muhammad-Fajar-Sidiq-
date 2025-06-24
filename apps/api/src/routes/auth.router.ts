@@ -9,5 +9,6 @@ export const authRouter = () => {
   const router = Router();
   router.post("/register", validateRegistration, AuthController.register);
   router.post("/login", validateLogin, AuthController.login);
+  router.post("/refresh-token", AuthController.refreshToken);
   return router;
 };

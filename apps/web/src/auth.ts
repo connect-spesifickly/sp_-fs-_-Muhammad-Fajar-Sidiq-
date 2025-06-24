@@ -2,12 +2,6 @@ import NextAuth, { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { api } from "./utils/axios";
 
-interface CustomUser {
-  id?: string;
-  email?: string;
-  token: string;
-}
-
 const config: NextAuthConfig = {
   providers: [
     Credentials({
@@ -17,10 +11,9 @@ const config: NextAuthConfig = {
         try {
           const response = await api.post<{
             data: {
+              user: { id?: string; email?: string };
               accessToken: string;
               refreshToken?: string;
-              id?: string;
-              email?: string;
             };
           }>("/auth/login", credentials);
           // Return an object that matches the expected User shape
@@ -28,8 +21,8 @@ const config: NextAuthConfig = {
             data: {
               accessToken: response.data.data.accessToken,
               refreshToken: response.data.data.refreshToken,
-              id: response.data.data.id,
-              email: response.data.data.email,
+              id: response.data.data.user.id,
+              email: response.data.data.user.email,
             },
           };
         } catch (error) {
@@ -41,16 +34,31 @@ const config: NextAuthConfig = {
   ],
   secret: process.env.AUTH_SECRET,
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.accessToken = user.data.accessToken;
         token.refreshToken = user.data.refreshToken;
+        token.email = user.data.email;
+        token.id = user.data.id;
+      } else if (token.accessToken || trigger === "update") {
+        const newToken = await api.post<{
+          data: {
+            accessToken: string;
+            refreshToken?: string;
+          };
+        }>("/auth/refresh-token", {
+          refreshToken: token.refreshToken,
+        });
+        token.accessToken = newToken.data.data.accessToken;
+        token.refreshToken = newToken.data.data.refreshToken;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
         session.accessToken = token.accessToken as string;
+        session.email = token.email as string;
+        session.id = token.id as string;
       }
       return session;
     },
