@@ -1,19 +1,57 @@
 import prisma from "../prisma";
-import { generateHashedPassword } from "../utils/generate-password";
+import {
+  generateHashedPassword,
+  verifyPassword,
+} from "../utils/generate-password";
+import { putUserAccessToken } from "../helpers/jwt";
+import { ResponseError } from "../helpers/error";
 
 class AuthService {
-  async register(data: { name: string; email: string; password: string }) {
-    const { name, email, password } = data;
-    const technicianPassword = await generateHashedPassword(password);
-    await prisma.accounts.create({
+  async register(data: { email: string; password: string }) {
+    const { email, password } = data;
+
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      throw new ResponseError(400, "User with this email already exists");
+    }
+
+    const userPassword = await generateHashedPassword(password);
+    const user = await prisma.user.create({
       data: {
-        name,
         email,
-        password: technicianPassword,
-        role: "Admin",
-        isVerified: true,
+        password: userPassword,
       },
     });
+
+    return { id: user.id, email: user.email };
+  }
+
+  async login(data: { email: string; password: string }) {
+    const { email, password } = data;
+
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new ResponseError(401, "Invalid email or password");
+    }
+
+    const isPasswordValid = await verifyPassword(password, user.password);
+    if (!isPasswordValid) {
+      throw new ResponseError(401, "Invalid email or password");
+    }
+
+    const tokens = await putUserAccessToken(user, email);
+
+    return {
+      user: { id: user.id, email: user.email },
+      ...tokens,
+    };
   }
 }
 

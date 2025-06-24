@@ -120,47 +120,37 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.AccountScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
+exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
-  role: 'role',
-  isVerified: 'isVerified'
-};
-
-exports.Prisma.CustomerScalarFieldEnum = {
-  id: 'id',
-  fullName: 'fullName',
-  deviceId: 'deviceId',
-  merkId: 'merkId',
-  devicePhoto: 'devicePhoto',
-  complaint: 'complaint',
-  preferredPickupDate: 'preferredPickupDate',
-  preferredPickupTime: 'preferredPickupTime',
-  pickupStatus: 'pickupStatus',
-  requestForDelivery: 'requestForDelivery'
-};
-
-exports.Prisma.DeviceScalarFieldEnum = {
-  id: 'id',
-  name: 'name'
-};
-
-exports.Prisma.MerkScalarFieldEnum = {
-  id: 'id',
-  name: 'name'
-};
-
-exports.Prisma.ServiceJobScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
-  customerId: 'customerId',
-  accountId: 'accountId',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectScalarFieldEnum = {
+  name: 'name',
+  ownerId: 'ownerId',
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TaskScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
   status: 'status',
-  descriptionOfDamage: 'descriptionOfDamage',
-  updatedAt: 'updatedAt',
-  endAt: 'endAt'
+  projectId: 'projectId',
+  assigneeId: 'assigneeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MembershipScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  projectId: 'projectId'
 };
 
 exports.Prisma.SortOrder = {
@@ -177,33 +167,17 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.AccountRole = exports.$Enums.AccountRole = {
-  Admin: 'Admin',
-  Technician: 'Technician'
-};
-
-exports.PickupStatus = exports.$Enums.PickupStatus = {
-  ANTAR_SENDIRI: 'ANTAR_SENDIRI',
-  BELUM_DIAMBIL: 'BELUM_DIAMBIL',
-  SUDAH_DIAMBIL: 'SUDAH_DIAMBIL',
-  DIBATALKAN: 'DIBATALKAN'
-};
-
-exports.ServiceJobStatus = exports.$Enums.ServiceJobStatus = {
-  DALAM_ANTRIAN: 'DALAM_ANTRIAN',
-  TUNGGU_SPAREPART: 'TUNGGU_SPAREPART',
-  PROSES_PENGERJAAN: 'PROSES_PENGERJAAN',
-  SELESAI: 'SELESAI',
-  DIBATALKAN: 'DIBATALKAN',
-  DALAM_PENGIRIMAN: 'DALAM_PENGIRIMAN'
+exports.TaskStatus = exports.$Enums.TaskStatus = {
+  Todo: 'Todo',
+  In_Progress: 'In_Progress',
+  Done: 'Done'
 };
 
 exports.Prisma.ModelName = {
-  Account: 'Account',
-  Customer: 'Customer',
-  Device: 'Device',
-  Merk: 'Merk',
-  ServiceJob: 'ServiceJob'
+  User: 'User',
+  Project: 'Project',
+  Task: 'Task',
+  Membership: 'Membership'
 };
 
 /**

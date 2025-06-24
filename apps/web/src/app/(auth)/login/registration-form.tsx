@@ -8,7 +8,6 @@ import { technicianRegistrationSchema } from "../../../validations/registration"
 export default function RegistrationForm() {
   const formik = useFormik<RegistrationFormValues>({
     initialValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -25,7 +24,7 @@ export default function RegistrationForm() {
       onSubmit={formik.handleSubmit}
       className="flex flex-col items-center justify-between flex-1 w-full h-full gap-4 bg-gray-100"
     >
-      Our Form (nda` perlu register kah?` langsung login)
+  
     </form>
   );
 }

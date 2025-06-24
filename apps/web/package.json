@@ -10,27 +10,35 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@radix-ui/react-label": "^2.1.2",
-    "@radix-ui/react-slot": "^1.1.2",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "formik": "^2.4.6",
     "lucide-react": "^0.483.0",
     "next": "14.0.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next-themes": "^0.4.6",
+    "react": "^19.2.0-canary-06e89951-20250620",
+    "react-dom": "^19.2.0-canary-06e89951-20250620",
+    "sonner": "^2.0.5",
     "tailwind-merge": "^3.0.2",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "autoprefixer": "^10.4.21",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
+  },
+  "overrides": {
+    "formik": {
+      "react": "$react"
+    }
   }
 }
