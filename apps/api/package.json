@@ -7,7 +7,9 @@
     "dev": "nodemon --exec ts-node src/index.ts",
     "build": "tsc",
     "prisma:migrate": "dotenv -e .env.local -- npx prisma migrate dev",
-    "test:api": "node test-api.js"
+    "test:api": "node test-api.js",
+    "start": "node src/index.ts",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
