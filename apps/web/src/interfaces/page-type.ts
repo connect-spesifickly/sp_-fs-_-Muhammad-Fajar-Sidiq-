@@ -1,7 +1,1 @@
-export type PageType =
-  | "profile"
-  | "password"
-  | "email"
-  | "verification"
-  | "applications"
-  | "saved-jobs";
+export type PageType = "board" | "settings" | "back";
