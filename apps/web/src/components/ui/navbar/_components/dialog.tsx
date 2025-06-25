@@ -41,7 +41,7 @@ export default function DialogLogout({
             </DialogDescription>
           </DialogHeader>
 
-          <DialogFooter>
+          <DialogFooter className="gap-1  sm:gap-0">
             <DialogClose asChild>
               <Button
                 variant="outline"

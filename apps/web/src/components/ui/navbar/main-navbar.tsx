@@ -60,7 +60,7 @@ const Navbar = React.forwardRef<
       }`}
       ref={ref}
     >
-      <div className="flex items-center h-full gap-2 sm:gap-16">
+      <div className="flex gap-2 items-center h-full sm:gap-16">
         <Logo />
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger
@@ -116,7 +116,7 @@ const Navbar = React.forwardRef<
               {session?.email?.charAt(0).toUpperCase()}
             </button>
             {isOpen && (
-              <div className="border-slate-200 border-[1px] absolute right-[-50px] mt-2 text-[14px] p-[5px] w-[224px]  rounded-[6px] bg-white shadow-lg  z-50">
+              <div className="border-slate-200 border-[1px] absolute right-[-10px] mt-2 text-[14px] p-[5px] w-[224px]  rounded-[6px] bg-white shadow-lg  z-50">
                 <div className="py-[6px] px-[8px] gap-[8px] font-medium text-red flex items-center hover:bg-transparent cursor-pointer">
                   <LogOut className="w-4 h-4 text-red-500" />
                   <div
