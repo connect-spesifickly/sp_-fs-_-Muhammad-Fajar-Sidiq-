@@ -158,15 +158,15 @@ export default function TaskDetailModal({
           )}
         </div>
         <DialogFooter className="flex justify-between mt-4 w-full">
-          <Button
-            variant="ghost"
-            className="text-red-600 bg-red-200 hover:bg-red-100"
-            onClick={handleDelete}
-          >
-            <Trash2 className="mr-2 w-4 h-4" />
-            Delete
-          </Button>
-          <div className="flex gap-2">
+          <div className="flex gap-2 justify-end w-full">
+            <Button
+              variant="ghost"
+              className="text-red-600 bg-red-200 hover:bg-red-100"
+              onClick={handleDelete}
+            >
+              <Trash2 className="mr-2 w-4 h-4" />
+              Delete
+            </Button>
             {isEditing ? (
               <>
                 <Button variant="outline" onClick={() => setIsEditing(false)}>

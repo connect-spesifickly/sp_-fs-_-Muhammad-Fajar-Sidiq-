@@ -33,8 +33,8 @@ export default function KanbanColumn({
           />
         ))}
         {tasks.length === 0 && (
-          <div className="py-8 text-center text-gray-500">
-            No tasks in this column
+          <div className="flex justify-center items-center py-8 pb-12 text-center text-gray-500">
+            <p>No tasks in this column</p>
           </div>
         )}
       </div>
