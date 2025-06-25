@@ -53,10 +53,6 @@ export default function MemberList({
     return email.split("@")[0]?.substring(0, 2).toUpperCase();
   };
 
-  const isCurrentOwner = (memberId: string) => {
-    return false;
-  };
-
   if (members.length === 0) {
     return (
       <div className="p-4 text-center text-gray-500">
