@@ -1,6 +1,7 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "env": ["AUTH_SECRET"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -8,7 +9,12 @@
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "api#build": {
-      "env": ["DATABASE_URL", "ACCESS_TOKEN_SECRET", "REFRESH_TOKEN_SECRET"],
+      "env": [
+        "DATABASE_URL",
+        "ACCESS_TOKEN_SECRET",
+        "REFRESH_TOKEN_SECRET",
+        "AUTH_SECRET"
+      ],
       "outputs": ["dist/**"]
     },
     "lint": {

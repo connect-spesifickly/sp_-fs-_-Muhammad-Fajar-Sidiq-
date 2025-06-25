@@ -7,7 +7,7 @@ const config: NextAuthConfig = {
     Credentials({
       id: "credentials",
       name: "credentials",
-      authorize: async (credentials, req) => {
+      authorize: async (credentials) => {
         try {
           const response = await api.post<{
             data: {
@@ -32,7 +32,7 @@ const config: NextAuthConfig = {
       },
     }),
   ],
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user, trigger }) {
       if (user) {
