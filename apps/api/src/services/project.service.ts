@@ -141,6 +141,11 @@ class ProjectService {
         projectId: id,
       },
     });
+    await prisma.membership.deleteMany({
+      where: {
+        projectId: id,
+      },
+    });
     return await prisma.project.delete({
       where: { id },
     });
