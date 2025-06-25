@@ -13,7 +13,7 @@ export default function DashboardPage() {
   React.useEffect(() => {
     const waitForSession = async () => {
       await new Promise((resolve) => {
-        setTimeout(resolve, 2500);
+        setTimeout(resolve, 4500);
       });
       if (!session) {
         router.push("/login");
