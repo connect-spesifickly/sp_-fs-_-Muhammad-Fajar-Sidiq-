@@ -9,7 +9,8 @@ export default function KanbanColumn({
   statusConfig,
   moveTask,
   onOpenTaskDetail,
-}: KanbanColumnProps) {
+  members,
+}: KanbanColumnProps & { members: any[] }) {
   return (
     <div className={`rounded-lg border-2 ${config.color} p-4`}>
       <div className="flex justify-between items-center mb-4">
@@ -28,6 +29,7 @@ export default function KanbanColumn({
             statusConfig={statusConfig}
             moveTask={(taskId, newStatus) => moveTask(taskId, newStatus)}
             onOpenTaskDetail={onOpenTaskDetail}
+            members={members}
           />
         ))}
         {tasks.length === 0 && (

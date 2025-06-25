@@ -37,6 +37,7 @@ export interface KanbanColumnProps {
   statusConfig: StatusConfig;
   moveTask: (taskId: string, newStatus: string) => void;
   onOpenTaskDetail: (taskId: string) => void;
+  members: any[];
 }
 
 export interface ITaskCardProps {
@@ -45,8 +46,18 @@ export interface ITaskCardProps {
   statusConfig: StatusConfig;
   moveTask: (taskId: string, newStatus: TaskStatus) => void;
   onOpenTaskDetail: (taskId: string) => void;
+  members: any[];
 }
 
 export interface CreateTaskModalProps {
   // ... existing code ...
+}
+
+export interface TaskDetailModalProps {
+  task: ITask | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onUpdate: (task: ITask) => Promise<void>;
+  onDelete: (taskId: string) => Promise<void>;
+  members: any[];
 }

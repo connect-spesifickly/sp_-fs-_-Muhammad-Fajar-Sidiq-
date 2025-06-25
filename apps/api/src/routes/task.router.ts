@@ -20,15 +20,6 @@ export const taskRouter = () => {
     TaskController.createTask as any
   );
   router.get("/:projectId/tasks", TaskController.getTasksByProject as any);
-  router.get("/:projectId/tasks/kanban", TaskController.getKanbanBoard as any);
-  router.get(
-    "/:projectId/tasks/status/:status",
-    TaskController.getTasksByStatus as any
-  );
-  router.get(
-    "/:projectId/tasks/assignee/:assigneeId",
-    TaskController.getTasksByAssignee as any
-  );
   router.get("/tasks/:taskId", TaskController.getTaskById as any);
   router.patch(
     "/tasks/:taskId",

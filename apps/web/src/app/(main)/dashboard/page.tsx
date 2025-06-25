@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import * as React from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
@@ -33,15 +34,21 @@ export default function DashboardPage() {
   return (
     <div className="flex items-center justify-center px-8 py-6 sm:px-28 sm:py-12 md:px-14 md:py-10">
       <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project: any) => (
-          <Link
-            href={`/projects/${project.id}`}
-            key={project.id}
-            className="p-4 bg-gray-500 rounded-lg shadow h-[100px] hover:bg-gray-700 hover:cursor-pointer transition-colors duration-200"
-          >
-            <h3 className="text-sm font-semibold text-white">{project.name}</h3>
-          </Link>
-        ))}
+        {status === "loading" || projects.length === 0
+          ? Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="h-[100px] w-full bg-gray-200" />
+            ))
+          : projects.map((project: any) => (
+              <Link
+                href={`/projects/${project.id}`}
+                key={project.id}
+                className="p-4 bg-gray-500 rounded-lg shadow h-[100px] hover:bg-gray-700 hover:cursor-pointer transition-colors duration-200"
+              >
+                <h3 className="text-sm font-semibold text-white">
+                  {project.name}
+                </h3>
+              </Link>
+            ))}
       </div>
     </div>
   );

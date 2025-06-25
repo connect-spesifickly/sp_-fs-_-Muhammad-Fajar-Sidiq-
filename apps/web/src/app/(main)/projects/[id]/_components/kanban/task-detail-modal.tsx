@@ -12,6 +12,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ITask } from "@/interfaces/kanban-interface";
 import { Trash2, Edit, Save, X } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useSession } from "next-auth/react";
 
 interface TaskDetailModalProps {
   task: ITask | null;
@@ -19,6 +27,7 @@ interface TaskDetailModalProps {
   onClose: () => void;
   onUpdate: (task: ITask) => Promise<void>;
   onDelete: (taskId: string) => Promise<void>;
+  members: any[];
 }
 
 export default function TaskDetailModal({
@@ -27,20 +36,48 @@ export default function TaskDetailModal({
   onClose,
   onUpdate,
   onDelete,
+  members = [],
 }: TaskDetailModalProps) {
+  const { data: session } = useSession();
   const [isEditing, setIsEditing] = React.useState(false);
   const [editedTask, setEditedTask] = React.useState<ITask | null>(task);
 
   React.useEffect(() => {
     setEditedTask(task);
-    setIsEditing(false); // Reset edit mode when task changes
+    setIsEditing(false);
   }, [task]);
 
   if (!task) return null;
 
+  let assignee = members.find(
+    (m) =>
+      String(m.id) ===
+      String(isEditing ? editedTask?.assigneeId : task.assigneeId)
+  );
+  if (
+    !assignee &&
+    session?.user &&
+    String(session.user.id) ===
+      String(isEditing ? editedTask?.assigneeId : task.assigneeId)
+  ) {
+    assignee = {
+      id: session.user.id,
+      name: session.user.name || session.user.email,
+      email: session.user.email,
+    };
+  }
+
   const handleUpdate = async () => {
     if (editedTask) {
-      await onUpdate(editedTask);
+      const payload = { ...editedTask };
+      if (
+        payload.assigneeId === "unassigned" ||
+        payload.assigneeId === undefined ||
+        payload.assigneeId === null
+      ) {
+        delete payload.assigneeId;
+      }
+      await onUpdate(payload);
       setIsEditing(false);
       onClose();
     }
@@ -76,7 +113,6 @@ export default function TaskDetailModal({
             <DialogTitle>{task.title}</DialogTitle>
           )}
         </DialogHeader>
-
         {isEditing ? (
           <Textarea
             name="description"
@@ -87,7 +123,40 @@ export default function TaskDetailModal({
         ) : (
           <p className="text-sm text-gray-600">{task.description}</p>
         )}
-
+        <div className="mt-1">
+          <label className="block mb-1 text-xs font-semibold">Assignee</label>
+          {isEditing ? (
+            <Select
+              value={editedTask?.assigneeId || "unassigned"}
+              onValueChange={(val) =>
+                setEditedTask((prev) =>
+                  prev
+                    ? {
+                        ...prev,
+                        assigneeId: val === "unassigned" ? undefined : val,
+                      }
+                    : prev
+                )
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select assignee" />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                <SelectItem value="unassigned">Unassigned</SelectItem>
+                {members.map((m) => (
+                  <SelectItem key={m.id} value={String(m.id)}>
+                    {m.name || m.email}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : (
+            <span className="px-1 text-sm font-medium text-gray-800">
+              {assignee ? assignee.name || assignee.email : "Unassigned"}
+            </span>
+          )}
+        </div>
         <DialogFooter className="flex justify-between mt-4 w-full">
           <Button
             variant="ghost"

@@ -10,6 +10,11 @@ class TaskService {
       throw new ResponseError(403, "Access denied to this project");
     }
 
+    // If assigneeId is not provided or is empty, set to creator
+    if (!data.assigneeId) {
+      data.assigneeId = userId;
+    }
+
     // If assigneeId is provided, verify the assignee is a member of the project
     if (data.assigneeId) {
       const assigneeAccess = await this.checkProjectAccess(

@@ -36,6 +36,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     description: "",
     status: "Todo",
   });
+  const [members, setMembers] = React.useState<any[]>([]);
 
   const statusConfig: StatusConfig = {
     Todo: {
@@ -159,6 +160,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
         {
           title: updatedTask.title,
           description: updatedTask.description,
+          assigneeId: updatedTask.assigneeId,
         },
         {
           headers: {
@@ -203,6 +205,33 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     }
     fetchProjectName();
     fetchTasks();
+    api
+      .get(`/projects/${projectId}/members`, {
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+      })
+      .then((res) => {
+        const memberUsers = (res.data.data || []).map((m: any) => m.user);
+        const owner = session?.user
+          ? {
+              id: session.id,
+              name: session.user.name || session.user.email,
+              email: session.user.email,
+            }
+          : null;
+        let allMembers = memberUsers;
+        if (owner && !memberUsers.some((u: any) => u.id === owner.id)) {
+          allMembers = [owner, ...memberUsers];
+        }
+        allMembers = allMembers.map((u: any) => ({
+          ...u,
+          name: u.name || u.email,
+          email: u.email,
+        }));
+        setMembers(allMembers);
+        console.log("All members for assignee:", allMembers);
+      });
   }, [session && session.accessToken]);
 
   if (loading) {
@@ -240,6 +269,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
             statusConfig={statusConfig}
             moveTask={moveTask}
             onOpenTaskDetail={handleOpenTaskDetail}
+            members={members}
           />
         ))}
       </div>
@@ -249,6 +279,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
         task={selectedTask}
         onUpdate={handleUpdateTask}
         onDelete={handleDeleteTask}
+        members={members}
       />
     </div>
   );
