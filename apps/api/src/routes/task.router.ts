@@ -30,7 +30,7 @@ export const taskRouter = () => {
     TaskController.getTasksByAssignee as any
   );
   router.get("/tasks/:taskId", TaskController.getTaskById as any);
-  router.put(
+  router.patch(
     "/tasks/:taskId",
     validateUpdateTask,
     TaskController.updateTask as any

@@ -1,37 +1,37 @@
 import * as React from "react";
 import TaskCard from "./task-card";
-import { KanbanColumnProps } from "@/interfaces/kanban";
+import { KanbanColumnProps } from "@/interfaces/kanban-interface";
 
 export default function KanbanColumn({
   status,
   config,
   tasks,
   statusConfig,
-  onMoveTask,
+  moveTask,
+  onOpenTaskDetail,
 }: KanbanColumnProps) {
   return (
     <div className={`rounded-lg border-2 ${config.color} p-4`}>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="font-semibold text-gray-800 text-[16px]">
-          {config.title}
-        </h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-semibold text-gray-800">{config.title}</h2>
         <span className="px-[10px] py-1 text-sm text-gray-700 bg-gray-200 rounded-full">
           {tasks.length}
         </span>
       </div>
 
-      <div className="h-full space-y-3 ">
+      <div className="space-y-3">
         {tasks.map((task) => (
           <TaskCard
             key={task.id}
             task={task}
             status={status}
             statusConfig={statusConfig}
-            onMoveTask={onMoveTask}
+            moveTask={(taskId, newStatus) => moveTask(taskId, newStatus)}
+            onOpenTaskDetail={onOpenTaskDetail}
           />
         ))}
         {tasks.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-full pb-12 text-center text-gray-500 ">
+          <div className="py-8 text-center text-gray-500">
             No tasks in this column
           </div>
         )}
