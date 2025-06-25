@@ -15,12 +15,12 @@ export default function DashboardPage() {
       await new Promise((resolve) => {
         setTimeout(resolve, 2500);
       });
-      if (!session) {
+      if (status === "unauthenticated") {
         router.push("/login");
       } else {
         const project = await api.get("/projects", {
           headers: {
-            Authorization: `Bearer ${session.accessToken}`,
+            Authorization: `Bearer ${session?.accessToken}`,
           },
         });
         setProjects(project.data.data);
@@ -29,7 +29,7 @@ export default function DashboardPage() {
     };
     if (status === "loading") return;
     waitForSession();
-  }, [session]);
+  }, [router, session, status]);
 
   return (
     <div className="flex items-center justify-center px-8 py-6 sm:px-28 sm:py-12 md:px-14 md:py-10">
