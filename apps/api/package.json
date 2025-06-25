@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "mime": "^3.0.0",
     "destroy": "^1.2.0",
     "depd": "^2.0.0",
     "body-parser": "^1.20.2",
