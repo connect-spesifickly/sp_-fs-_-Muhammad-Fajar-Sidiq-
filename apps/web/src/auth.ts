@@ -67,7 +67,7 @@ const config: NextAuthConfig = {
 
 const nextAuth = NextAuth(config);
 
-export const auth: typeof nextAuth.auth = nextAuth.auth;
-export const handlers: typeof nextAuth.handlers = nextAuth.handlers;
-export const signIn: typeof nextAuth.signIn = nextAuth.signIn;
-export const signOut: typeof nextAuth.signOut = nextAuth.signOut;
+export const handlers = nextAuth.handlers;
+export const auth: any = nextAuth.auth;
+export const signIn = nextAuth.signIn;
+export const signOut = nextAuth.signOut;
