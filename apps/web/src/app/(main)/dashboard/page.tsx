@@ -2,19 +2,20 @@
 import { api } from "@/utils/axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import * as React from "react";
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
+  const router = useRouter();
   const [projects, setProjects] = React.useState([]);
   React.useEffect(() => {
     const waitForSession = async () => {
       await new Promise((resolve) => {
-        setTimeout(resolve, 3000);
+        setTimeout(resolve, 2500);
       });
       if (!session) {
-        redirect("/login");
+        router.push("/login");
       } else {
         const project = await api.get("/projects", {
           headers: {

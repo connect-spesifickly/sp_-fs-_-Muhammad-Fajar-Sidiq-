@@ -21,7 +21,11 @@ export interface KanbanColumnProps {
   config: StatusConfig[keyof StatusConfig];
   tasks: Task[];
   statusConfig: StatusConfig;
-  onMoveTask: (taskId: string, newStatus: string) => Promise<void>;
+  onMoveTask: (
+    taskId: string,
+    currentStatus: string,
+    newStatus: string
+  ) => Promise<void>;
 }
 
 export interface CreateTaskModalProps {
@@ -61,7 +65,7 @@ export interface StatusConfig {
     prev: null;
     next: string;
   };
-  InProgress: {
+  In_Progress: {
     title: string;
     color: string;
     prev: string;
@@ -79,6 +83,6 @@ export type TaskStatus = keyof StatusConfig;
 
 export interface GroupedTasks {
   Todo: Task[];
-  InProgress: Task[];
+  In_Progress: Task[];
   Done: Task[];
 }

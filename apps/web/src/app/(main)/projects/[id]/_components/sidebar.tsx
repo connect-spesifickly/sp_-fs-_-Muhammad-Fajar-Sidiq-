@@ -112,7 +112,7 @@ export function SidebarPage({ activePage, onPageChange }: SidebarProps) {
                   }`}
                 >
                   <span className="mr-3">{getIcon(item.icon)}</span>
-                  <span>{item.label}</span>
+                  <span className="text-[15px]">{item.label}</span>
                 </button>
               </li>
             ))}

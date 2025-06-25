@@ -2,7 +2,7 @@ import * as React from "react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { KanbanHeaderProps } from "@/interfaces/kanban-interface";
+import { KanbanHeaderProps } from "@/interfaces/kanban";
 
 export function KanbanHeader({ onCreateTask }: KanbanHeaderProps) {
   return (

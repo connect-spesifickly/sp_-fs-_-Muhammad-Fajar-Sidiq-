@@ -65,7 +65,7 @@ const Navbar = React.forwardRef<
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger
             onClick={() => setOpen(true)}
-            className="flex items-center h-full text-center text-[14px] px-3 bg-blue-600 text-white rounded-[4px] mt-1 hover:bg-blue-700 transition-all hover:cursor-pointer"
+            className="flex !py-[17px] items-center h-full text-center text-[16px] px-4 bg-blue-600 text-white rounded-[4px] mt-1 hover:bg-blue-700 transition-all hover:cursor-pointer"
           >
             Create
           </DialogTrigger>

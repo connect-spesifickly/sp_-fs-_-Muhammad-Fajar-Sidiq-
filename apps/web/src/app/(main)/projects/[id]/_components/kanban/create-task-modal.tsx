@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CreateTaskModalProps } from "@/interfaces/kanban-interface";
+import { CreateTaskModalProps } from "@/interfaces/kanban";
 
 export default function CreateTaskModal({
   isOpen,

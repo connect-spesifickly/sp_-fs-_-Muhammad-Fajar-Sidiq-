@@ -8,18 +8,19 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
 import KanbanColumn from "./kanban-column";
-import { GroupedTasks, KanbanBoardProps } from "@/interfaces/kanban-interface";
+import { GroupedTasks, KanbanBoardProps } from "@/interfaces/kanban";
 
 export function KanbanBoard({ projectId }: KanbanBoardProps) {
   const { data: session } = useSession();
   const [tasks, setTasks] = React.useState<GroupedTasks>({
     Todo: [],
-    InProgress: [],
+    In_Progress: [],
     Done: [],
   });
   const [loading, setLoading] = React.useState(true);
   const [showCreateForm, setShowCreateForm] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [projectName, setProjectName] = React.useState("");
   const [newTask, setNewTask] = React.useState({
     title: "",
     description: "",
@@ -33,7 +34,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
       prev: null,
       next: "In_Progress",
     },
-    InProgress: {
+    In_Progress: {
       title: "In Progress",
       color: "border-blue-300 bg-blue-50",
       prev: "Todo",
@@ -50,15 +51,20 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/${projectId}/tasks`);
+      const response = await api.get(`/projects/${projectId}/tasks`, {
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+      });
+      console.log("Fetched tasks:", response.data.data);
       const groupedTasks = {
-        Todo: response.data.filter(
+        Todo: response.data.data.filter(
           (task: { status: string }) => task.status === "Todo"
         ),
-        InProgress: response.data.filter(
+        In_Progress: response.data.data.filter(
           (task: { status: string }) => task.status === "In_Progress"
         ),
-        Done: response.data.filter(
+        Done: response.data.data.filter(
           (task: { status: string }) => task.status === "Done"
         ),
       };
@@ -70,6 +76,19 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     }
   };
 
+  const fetchProjectName = async () => {
+    try {
+      const response = await api.get(`/projects/${projectId}`, {
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+      });
+      setProjectName(response.data.data.name);
+    } catch (err) {
+      console.error("Failed to fetch project name:", err);
+    }
+  };
+
   const createTask = async (task: {
     title: string;
     description: string;
@@ -77,7 +96,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
   }) => {
     try {
       setIsSubmitting(true);
-      await api.post(`/${projectId}/tasks`, task, {
+      await api.post(`/projects/${projectId}/tasks`, task, {
         headers: {
           Authorization: `Bearer ${session?.accessToken}`,
         },
@@ -92,10 +111,14 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
     }
   };
 
-  const moveTask = async (taskId: string, newStatus: string) => {
+  const moveTask = async (
+    taskId: string,
+    currentStatus: string,
+    newStatus: string
+  ) => {
     try {
       await api.patch(
-        `/tasks/${taskId}/status`,
+        `/projects/tasks/${taskId}/status`,
         { status: newStatus },
         {
           headers: {
@@ -118,8 +141,12 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
   };
 
   React.useEffect(() => {
+    if (!session) {
+      return;
+    }
+    fetchProjectName();
     fetchTasks();
-  }, []);
+  }, [session && session.accessToken]);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -128,7 +155,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
   return (
     <div className="p-6 mx-auto max-w-7xl">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Kanban Board</h1>
+        <h1 className="text-[24px] font-bold text-gray-800">{projectName}</h1>
         <CreateTaskModal
           isOpen={showCreateForm}
           onOpenChange={setShowCreateForm}
@@ -140,8 +167,8 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
 
         <Dialog open={showCreateForm} onOpenChange={setShowCreateForm}>
           <DialogTrigger asChild>
-            <Button className="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700">
-              <Plus size={16} />
+            <Button className="flex items-center gap-2 text-[13px] text-white bg-blue-600 hover:bg-blue-700">
+              <Plus size={16} className="scale-95" />
               Add Task
             </Button>
           </DialogTrigger>

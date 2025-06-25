@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { ITaskCardProps, StatusConfig } from "@/interfaces/kanban-interface";
+import { ITaskCardProps, StatusConfig } from "@/interfaces/kanban";
 
 export default function TaskCard({
   task,
@@ -14,9 +14,11 @@ export default function TaskCard({
 
   return (
     <div className="p-4 transition-shadow bg-white border border-gray-200 rounded-lg hover:shadow-md">
-      <h3 className="mb-2 font-medium text-gray-900">{task.title}</h3>
+      <h3 className="mb-2 font-medium text-gray-900 text-[15px]">
+        {task.title}
+      </h3>
       {task.description && (
-        <p className="mb-3 text-sm leading-relaxed text-gray-600">
+        <p className="mb-3 text-sm leading-relaxed text-gray-600 text-[13px] text-justify">
           {task.description}
         </p>
       )}
@@ -34,7 +36,7 @@ export default function TaskCard({
           </button>
         )}
 
-        {nextStatus && (
+        {nextStatus && statusConfig[nextStatus as keyof StatusConfig] && (
           <button
             onClick={() =>
               onMoveTask(task.id, status, nextStatus as keyof StatusConfig)

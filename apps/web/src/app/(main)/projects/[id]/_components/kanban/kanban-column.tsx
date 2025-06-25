@@ -1,6 +1,6 @@
 import * as React from "react";
 import TaskCard from "./task-card";
-import { KanbanColumnProps } from "@/interfaces/kanban-interface";
+import { KanbanColumnProps } from "@/interfaces/kanban";
 
 export default function KanbanColumn({
   status,
@@ -12,13 +12,15 @@ export default function KanbanColumn({
   return (
     <div className={`rounded-lg border-2 ${config.color} p-4`}>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-800">{config.title}</h2>
-        <span className="px-2 py-1 text-sm text-gray-700 bg-gray-200 rounded-full">
+        <h2 className="font-semibold text-gray-800 text-[16px]">
+          {config.title}
+        </h2>
+        <span className="px-[10px] py-1 text-sm text-gray-700 bg-gray-200 rounded-full">
           {tasks.length}
         </span>
       </div>
 
-      <div className="space-y-3">
+      <div className="h-full space-y-3 ">
         {tasks.map((task) => (
           <TaskCard
             key={task.id}
@@ -29,7 +31,7 @@ export default function KanbanColumn({
           />
         ))}
         {tasks.length === 0 && (
-          <div className="py-8 text-center text-gray-500">
+          <div className="flex flex-col items-center justify-center h-full pb-12 text-center text-gray-500 ">
             No tasks in this column
           </div>
         )}
