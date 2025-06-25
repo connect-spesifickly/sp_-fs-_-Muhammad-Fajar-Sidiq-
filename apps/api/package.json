@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "encodeurl": "^1.0.2",
     "@prisma/client": "^6.8.2",
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^6.0.0",
