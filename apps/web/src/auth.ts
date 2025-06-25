@@ -32,7 +32,7 @@ const config: NextAuthConfig = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
   callbacks: {
     async jwt({ token, user, trigger }) {
       if (user) {
