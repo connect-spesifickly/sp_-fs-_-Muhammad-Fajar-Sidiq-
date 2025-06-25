@@ -52,7 +52,7 @@ function Button({
       data-slot="button"
       className={cn(
         buttonVariants({ variant, size }),
-        "bg-blue-600 h-[40px] py-2 px-4 rounded-md text-sm text-white hover:bg-blue-500",
+        "px-4 py-2 text-sm text-white bg-blue-600 rounded-md h-[40px] hover:bg-blue-500",
         className
       )}
       {...props}

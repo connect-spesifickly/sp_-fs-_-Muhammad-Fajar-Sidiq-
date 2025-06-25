@@ -100,8 +100,8 @@ export default function DeleteProject({
             <AlertDialogDescription className="space-y-3">
               <p>
                 This action <strong>cannot be undone</strong>. This will
-                permanently delete the project <strong>"{projectName}"</strong>{" "}
-                and all of its data.
+                permanently delete the project{" "}
+                <strong>&quot;{projectName}&quot;</strong> and all of its data.
               </p>
               <div className="space-y-2">
                 <Label htmlFor="confirmation" className="text-sm font-medium">

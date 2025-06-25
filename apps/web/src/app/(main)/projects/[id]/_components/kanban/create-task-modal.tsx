@@ -71,7 +71,7 @@ export default function CreateTaskModal({
             </SelectContent>
           </Select>
 
-          <div className="flex justify-end w-full gap-2">
+          <div className="flex gap-2 justify-end w-full">
             <Button
               type="button"
               variant="outline"
