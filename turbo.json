@@ -1,7 +1,6 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
-  "env": ["NEXTAUTH_SECRET"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
