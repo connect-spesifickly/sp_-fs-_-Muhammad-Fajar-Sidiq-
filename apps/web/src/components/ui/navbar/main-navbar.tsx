@@ -17,11 +17,13 @@ import { useFormik } from "formik";
 import { Input } from "../input";
 import { Button } from "../button";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 const Navbar = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { location?: string }
 >(({ className, location }, ref) => {
   const { data: session } = useSession();
+  const router = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -46,6 +48,7 @@ const Navbar = React.forwardRef<
         );
         toast("Project created successfully");
         setOpen(false);
+        router.push("/dashboard");
       } catch (err) {
         toast("Failed to create project");
       } finally {
@@ -60,7 +63,7 @@ const Navbar = React.forwardRef<
       }`}
       ref={ref}
     >
-      <div className="flex gap-2 items-center h-full sm:gap-16">
+      <div className="flex items-center h-full gap-2 sm:gap-16">
         <Logo />
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger
