@@ -48,11 +48,12 @@ const Navbar = React.forwardRef<
         );
         toast("Project created successfully");
         setOpen(false);
+        router.push("/dashboard");
+        router.refresh();
       } catch (err) {
         toast("Failed to create project");
       } finally {
         setIsSubmitting(false);
-        router.push("/dashboard");
       }
     },
   });
