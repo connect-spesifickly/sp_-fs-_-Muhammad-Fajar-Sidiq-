@@ -5,7 +5,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -157,30 +156,30 @@ export default function TaskDetailModal({
             </span>
           )}
         </div>
-        <DialogFooter className="flex justify-between mt-4 w-full">
-          <div className="flex gap-2 justify-end w-full">
+        <DialogFooter className="flex justify-between w-full mt-4">
+          <div className="flex justify-end w-full gap-2">
             <Button
               variant="ghost"
               className="text-red-600 bg-red-200 hover:bg-red-100"
               onClick={handleDelete}
             >
-              <Trash2 className="mr-2 w-4 h-4" />
+              <Trash2 className="w-4 h-4 mr-2" />
               Delete
             </Button>
             {isEditing ? (
               <>
                 <Button variant="outline" onClick={() => setIsEditing(false)}>
-                  <X className="mr-2 w-4 h-4" />
+                  <X className="w-4 h-4 mr-2" />
                   Cancel
                 </Button>
                 <Button onClick={handleUpdate}>
-                  <Save className="mr-2 w-4 h-4" />
+                  <Save className="w-4 h-4 mr-2" />
                   Save
                 </Button>
               </>
             ) : (
               <Button onClick={() => setIsEditing(true)}>
-                <Edit className="mr-2 w-4 h-4" />
+                <Edit className="w-4 h-4 mr-2" />
                 Edit
               </Button>
             )}

@@ -2,8 +2,6 @@ import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   ITaskCardProps,
-  StatusConfig,
-  TaskStatus,
 } from "@/interfaces/kanban-interface";
 import { useSession } from "next-auth/react";
 
@@ -46,11 +44,11 @@ export default function TaskCard({
 
   return (
     <div
-      className="relative p-4 bg-white rounded-lg border border-gray-200 transition-shadow hover:shadow-md hover:cursor-pointer"
+      className="relative p-4 transition-shadow bg-white border border-gray-200 rounded-lg hover:shadow-md hover:cursor-pointer"
       onClick={() => onOpenTaskDetail(task.id)}
     >
       <div className="absolute top-2 right-2">
-        <div className="flex justify-center items-center w-7 h-7 text-xs font-bold bg-blue-200 rounded-full">
+        <div className="flex items-center justify-center text-xs font-bold bg-blue-200 rounded-full w-7 h-7">
           {initials}
         </div>
       </div>
@@ -67,7 +65,7 @@ export default function TaskCard({
               e.stopPropagation(); // Prevent modal from opening
               moveTask(task.id, prevStatus);
             }}
-            className="flex gap-1 items-center px-2 py-1 text-xs text-gray-700 bg-gray-100 rounded transition-colors hover:bg-gray-200"
+            className="flex items-center gap-1 px-2 py-1 text-xs text-gray-700 transition-colors bg-gray-100 rounded hover:bg-gray-200"
             title={`Move to ${statusConfig[prevStatus].title}`}
           >
             <ChevronLeft size={12} />
@@ -81,7 +79,7 @@ export default function TaskCard({
               e.stopPropagation(); // Prevent modal from opening
               moveTask(task.id, nextStatus);
             }}
-            className="flex gap-1 items-center px-2 py-1 text-xs text-blue-700 bg-blue-100 rounded transition-colors hover:bg-blue-200"
+            className="flex items-center gap-1 px-2 py-1 text-xs text-blue-700 transition-colors bg-blue-100 rounded hover:bg-blue-200"
             title={`Move to ${statusConfig[nextStatus].title}`}
           >
             {statusConfig[nextStatus].title}
