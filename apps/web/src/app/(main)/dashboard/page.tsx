@@ -32,8 +32,8 @@ export default function DashboardPage() {
   }, [session]);
 
   return (
-    <div className="flex items-center justify-center px-8 py-6 sm:px-28 sm:py-12 md:px-14 md:py-10">
-      <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+    <div className="flex justify-center items-center px-8 py-6 sm:px-28 sm:py-12 md:px-14 md:py-10">
+      <div className="grid grid-cols-1 gap-5 w-full md:grid-cols-2 lg:grid-cols-3">
         {status === "loading" || projects.length === 0
           ? Array.from({ length: 6 }).map((_, i) => (
               <Skeleton key={i} className="h-[100px] w-full bg-gray-200" />
