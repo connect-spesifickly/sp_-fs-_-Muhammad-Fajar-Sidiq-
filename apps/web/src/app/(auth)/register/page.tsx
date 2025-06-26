@@ -125,7 +125,7 @@ export default function Register() {
         <p className="font-normal text-[14px] text-sm text-slate-600">
           Already have an account?{" "}
           <a
-            href="http://localhost:3000/login"
+            href="https://sp-fs-muhammad-fajar-sidiq-web-gn9n.vercel.app/login"
             className="text-blue-600 underline"
           >
             Login

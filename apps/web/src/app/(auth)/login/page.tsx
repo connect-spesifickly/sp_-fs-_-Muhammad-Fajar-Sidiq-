@@ -113,7 +113,7 @@ export default function Login() {
         <p className="font-normal text-[14px] text-sm text-slate-600">
           Don`t have an account?{" "}
           <a
-            href="http://localhost:3000/register"
+            href="https://sp-fs-muhammad-fajar-sidiq-web-gn9n.vercel.app/register"
             className="text-blue-600 underline"
           >
             Register
