@@ -17,15 +17,19 @@ const config: NextAuthConfig = {
             };
           }>("/auth/login", credentials);
           // Return an object that matches the expected User shape
-          return {
-            data: {
-              accessToken: response.data.data.accessToken,
-              refreshToken: response.data.data.refreshToken,
-              id: response.data.data.user.id,
-              email: response.data.data.user.email,
-            },
-          };
+          
+            const user = {
+              data: {
+                accessToken: response.data.data.accessToken,
+                refreshToken: response.data.data.refreshToken,
+                id: response.data.data.user.id,
+                email: response.data.data.user.email,
+              }
+            }
+            return user;
+          
         } catch (error) {
+          console.error("Authorize error in production:", error);
           console.error(error);
           return null;
         }
