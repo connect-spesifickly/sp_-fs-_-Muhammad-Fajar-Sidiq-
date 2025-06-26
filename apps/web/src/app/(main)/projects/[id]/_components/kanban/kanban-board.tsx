@@ -4,7 +4,6 @@ import * as React from "react";
 import LoadingSpinner from "./loading-spinner";
 import CreateTaskModal from "./create-task-modal";
 import TaskDetailModal from "./task-detail-modal";
-
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
@@ -240,7 +239,7 @@ export function KanbanBoard({ projectId }: KanbanBoardProps) {
 
   return (
     <div className="p-6 mx-auto max-w-7xl">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex items-center justify-between mb-6">
         <h1 className="text-[24px] font-bold text-gray-800">{projectName}</h1>
         <Dialog open={showCreateForm} onOpenChange={setShowCreateForm}>
           <DialogTrigger asChild>
